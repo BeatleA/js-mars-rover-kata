@@ -1,6 +1,6 @@
 const {
     isValidGrid,
-    isValidPosition
+    isValidPositionAndDirection
 } = require("./validation");
 
 const navigateRover = (grid, position, instructions) => {
@@ -8,7 +8,9 @@ const navigateRover = (grid, position, instructions) => {
     if (!position) throw new Error("position is required");
     if (!instructions) throw new Error("instructions is required");
     if (!isValidGrid(grid)) throw new Error("invalid grid");
-    if (!isValidPosition(position[0], position[1], ...grid) || !(/^[NSWE]+$/g.test(position[2]))) throw new Error("invalid position");
+    if (!isValidPositionAndDirection(grid, position)) throw new Error("invalid position");
+    if (!(/^[LRM]+$/g.test(instructions))) throw new Error("invalid instructions");
+
 };
 
 const move = (grid, position) => {

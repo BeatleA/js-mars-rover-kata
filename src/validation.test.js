@@ -1,6 +1,7 @@
 const {
     isValidGrid,
-    isValidPosition
+    isValidPosition,
+    isValidPositionAndDirection
 } = require("./validation");
 
 describe("isValidGrid", () => {
@@ -46,5 +47,27 @@ describe("isValidPosition", () => {
         expect(isValidPosition(2, -1, 3, 6)).toBe(false);
         const grid = [5, 6];
         expect(isValidPosition(6, 7, ...grid)).toBe(false);
+    });
+});
+
+describe("isValidPositionAndDirection", () => {
+    test("returns true when position and direction are valid", () => {
+        const grid = [6, 7];
+        const position = [1, 2, "N"];
+        expect(isValidPositionAndDirection(grid, position)).toBe(true);
+        expect(isValidPositionAndDirection([5, 10], [5, 10, "S"])).toBe(true);
+        expect(isValidPositionAndDirection([0, 0], [0, 0, "W"])).toBe(true);
+        expect(isValidPositionAndDirection([5, 5], [1, 3, "E"])).toBe(true);
+    });
+
+    test("returns false when position or direction are not valid", () => {
+        const grid = [5, 6];
+        const position = [1, 2, "NS"];
+        expect(isValidPositionAndDirection(grid, position)).toBe(false);
+        expect(isValidPositionAndDirection([5, 5], [1, 3, "K"])).toBe(false);
+        expect(isValidPositionAndDirection([0, 0], [0, 0, "n"])).toBe(false);
+        expect(isValidPositionAndDirection([5, 5], [6, 3, "W"])).toBe(false);
+        expect(isValidPositionAndDirection([5, 5], [6, 3, 4])).toBe(false);
+        expect(isValidPositionAndDirection([5, 5], ["N", 3, "E"])).toBe(false);
     });
 });

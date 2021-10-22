@@ -27,5 +27,9 @@ describe("navigateRover", () => {
         expect(() => {
             navigateRover([1, 5], [1, 2, "K"], "LMLMLMLMM");
         }).toThrow("invalid position");
+
+        expect(() => {
+            navigateRover([1, 5], [1, 4, "E"], "LMLMLSLMM");
+        }).toThrow("invalid instructions");
     });
 });
