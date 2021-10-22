@@ -12,7 +12,30 @@ const navigateRover = (grid, position, instructions) => {
     if (!isValidPositionAndDirection(grid, position)) throw new Error("invalid position");
     if (!(/^[LRM]+$/g.test(instructions))) throw new Error("invalid instructions");
 
-};
+    let [x, y, direction] = position;
+    const left = { N: "W", S: "E", W: "S", E: "N" };
+    const right = { N: "E", S: "W", W: "N", E: "S" };
+
+    for (let instruction of [...instructions]) {
+        switch (instruction) {
+            case "L":
+                direction = left[direction];
+                break;
+            case "R":
+                direction = right[direction];
+                break;
+            case "M":
+                const newPosition = move(grid, [x, y, direction]);
+                if (JSON.stringify(newPosition) === JSON.stringify([x, y, direction])) {
+                    return [x, y, direction];
+                } else {
+                    [x, y, direction] = newPosition;
+                }
+        }
+    }
+
+    return [x, y, direction];
+}
 
 const move = (grid, position) => {
     let [x, y, direction] = position;
