@@ -1,5 +1,6 @@
 const {
     isValidGrid,
+    isValidPosition,
     isValidPositionAndDirection
 } = require("./validation");
 
@@ -14,7 +15,31 @@ const navigateRover = (grid, position, instructions) => {
 };
 
 const move = (grid, position) => {
+    let [x, y, direction] = position;
+    switch (direction) {
+        case "N":
+            y++;
+            break;
+        case "S":
+            y--;
+            break;
+        case "W":
+            x--;
+            break;
+        case "E":
+            x++;
+            break;
+    }
 
+    if (isValidPosition(x, y, ...grid)) {
+        return [x, y, direction];
+    } else {
+        console.log("Rover cannot go any further. Incorrect instructions. Last possible position returned.");
+        return position;
+    }
 }
 
-module.exports = navigateRover;
+module.exports = {
+    navigateRover,
+    move
+}

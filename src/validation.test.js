@@ -69,5 +69,6 @@ describe("isValidPositionAndDirection", () => {
         expect(isValidPositionAndDirection([5, 5], [6, 3, "W"])).toBe(false);
         expect(isValidPositionAndDirection([5, 5], [6, 3, 4])).toBe(false);
         expect(isValidPositionAndDirection([5, 5], ["N", 3, "E"])).toBe(false);
+        expect(isValidPositionAndDirection([5, 5], [1, 3, ""])).toBe(false);
     });
 });
