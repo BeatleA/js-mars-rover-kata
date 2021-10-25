@@ -25,7 +25,7 @@ const navigateRover = (grid, position, instructions) => {
                 [x, y, direction] = newPosition;
             } else {
                 console.log("Rover cannot go any further. Incorrect instructions. Last possible position returned.");
-                return [x, y, direction];
+                break;
             }
         }
     }
@@ -35,9 +35,9 @@ const navigateRover = (grid, position, instructions) => {
 
 const move = (grid, position) => {
     let [x, y, direction] = position;
-    const moveXY = { N: (x, y) => [x, ++y], S: (x, y) => [x, --y], W: (x, y) => [--x, y], E: (x, y) => [++x, y] };
+    const moveXY = { N: [x, y + 1], S: [x, y - 1], W: [x - 1, y], E: [x + 1, y] };
 
-    [x, y] = moveXY[direction](x, y);    
+    [x, y] = moveXY[direction];
     const valid = isValidPosition(x, y, ...grid);
 
     return [valid ? [x, y, direction] : position, valid];
