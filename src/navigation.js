@@ -15,17 +15,17 @@ const navigateRover = (grid, position, instructions) => {
     let [x, y, direction] = position;
     const left = { N: "W", S: "E", W: "S", E: "N" };
     const right = { N: "E", S: "W", W: "N", E: "S" };
-    const spin = { L: direction => left[direction], R: direction => right[direction], M: direction => direction }
 
     for (let instruction of [...instructions]) {
-        direction = spin[instruction](direction);
-
-        if (instruction === "M") {
-            const newPosition = move(grid, [x, y, direction]);
-            if (JSON.stringify(newPosition) === JSON.stringify([x, y, direction])) {
-                return [x, y, direction];
-            } else {
+        if (instruction !== "M") {
+            direction = (instruction === "L") ? left[direction] : right[direction];
+        } else {
+            const [newPosition, validPosition] = move(grid, [x, y, direction]);
+            if (validPosition) {
                 [x, y, direction] = newPosition;
+            } else {
+                console.log("Rover cannot go any further. Incorrect instructions. Last possible position returned.");
+                return [x, y, direction];
             }
         }
     }
@@ -35,26 +35,12 @@ const navigateRover = (grid, position, instructions) => {
 
 const move = (grid, position) => {
     let [x, y, direction] = position;
-    switch (direction) {
-        case "N":
-            y++;
-            break;
-        case "S":
-            y--;
-            break;
-        case "W":
-            x--;
-            break;
-        case "E":
-            x++;
-    }
+    const moveXY = { N: (x, y) => [x, ++y], S: (x, y) => [x, --y], W: (x, y) => [--x, y], E: (x, y) => [++x, y] };
 
-    if (isValidPosition(x, y, ...grid)) {
-        return [x, y, direction];
-    } else {
-        console.log("Rover cannot go any further. Incorrect instructions. Last possible position returned.");
-        return position;
-    }
+    [x, y] = moveXY[direction](x, y);    
+    const valid = isValidPosition(x, y, ...grid);
+
+    return [valid ? [x, y, direction] : position, valid];
 }
 
 module.exports = {
