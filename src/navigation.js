@@ -31,7 +31,7 @@ const navigateRover = (grid, position, instructions) => {
     }
 
     return [x, y, direction];
-}
+};
 
 const move = (grid, position) => {
     let [x, y, direction] = position;
@@ -41,9 +41,9 @@ const move = (grid, position) => {
     const valid = isValidPosition(x, y, ...grid);
 
     return [valid ? [x, y, direction] : position, valid];
-}
+};
 
 module.exports = {
     navigateRover,
     move
-}
+};
