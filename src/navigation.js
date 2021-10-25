@@ -15,22 +15,18 @@ const navigateRover = (grid, position, instructions) => {
     let [x, y, direction] = position;
     const left = { N: "W", S: "E", W: "S", E: "N" };
     const right = { N: "E", S: "W", W: "N", E: "S" };
+    const spin = { L: direction => left[direction], R: direction => right[direction], M: direction => direction }
 
     for (let instruction of [...instructions]) {
-        switch (instruction) {
-            case "L":
-                direction = left[direction];
-                break;
-            case "R":
-                direction = right[direction];
-                break;
-            case "M":
-                const newPosition = move(grid, [x, y, direction]);
-                if (JSON.stringify(newPosition) === JSON.stringify([x, y, direction])) {
-                    return [x, y, direction];
-                } else {
-                    [x, y, direction] = newPosition;
-                }
+        direction = spin[instruction](direction);
+
+        if (instruction === "M") {
+            const newPosition = move(grid, [x, y, direction]);
+            if (JSON.stringify(newPosition) === JSON.stringify([x, y, direction])) {
+                return [x, y, direction];
+            } else {
+                [x, y, direction] = newPosition;
+            }
         }
     }
 
@@ -51,7 +47,6 @@ const move = (grid, position) => {
             break;
         case "E":
             x++;
-            break;
     }
 
     if (isValidPosition(x, y, ...grid)) {
