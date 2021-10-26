@@ -52,22 +52,36 @@ describe("navigateRover", () => {
     });
 });
 
-describe("move", () => {
-    test("returns new position if move is within the grid", () => {
-        expect(move([5, 5], [1, 4, "E"])).toEqual([[2, 4, "E"], true]);
-        expect(move([5, 5], [2, 4, "N"])).toEqual([[2, 5, "N"], true]);
-        expect(move([0, 1], [0, 0, "N"])).toEqual([[0, 1, "N"], true]);
-        expect(move([3, 3], [2, 3, "E"])).toEqual([[3, 3, "E"], true]);
-        expect(move([3, 3], [3, 3, "W"])).toEqual([[2, 3, "W"], true]);
-        expect(move([3, 3], [3, 3, "S"])).toEqual([[3, 2, "S"], true]);
+describe.only("move", () => {
+    test("returns new position and true if move is within the grid", () => {
+        expect(move([5, 5], [1, 4, "E"], [])).toEqual([[2, 4, "E"], true]);
+        expect(move([5, 5], [2, 4, "N"], [])).toEqual([[2, 5, "N"], true]);
+        expect(move([0, 1], [0, 0, "N"], [])).toEqual([[0, 1, "N"], true]);
+        expect(move([3, 3], [2, 3, "E"], [])).toEqual([[3, 3, "E"], true]);
+        expect(move([3, 3], [3, 3, "W"], [])).toEqual([[2, 3, "W"], true]);
+        expect(move([3, 3], [3, 3, "S"], [])).toEqual([[3, 2, "S"], true]);
     });
 
-    test("returns old position if move leads off the grid", () => {
-        expect(move([5, 5], [5, 3, "E"])).toEqual([[5, 3, "E"], false]);
-        expect(move([5, 5], [2, 5, "N"])).toEqual([[2, 5, "N"], false]);
-        expect(move([0, 0], [0, 0, "W"])).toEqual([[0, 0, "W"], false]);
-        expect(move([3, 3], [2, 3, "N"])).toEqual([[2, 3, "N"], false]);
-        expect(move([7, 3], [0, 3, "W"])).toEqual([[0, 3, "W"], false]);
-        expect(move([7, 3], [5, 0, "S"])).toEqual([[5, 0, "S"], false]);
+    test("returns old position and false if move leads off the grid", () => {
+        expect(move([5, 5], [5, 3, "E"], [])).toEqual([[5, 3, "E"], false]);
+        expect(move([5, 5], [2, 5, "N"], [])).toEqual([[2, 5, "N"], false]);
+        expect(move([0, 0], [0, 0, "W"], [])).toEqual([[0, 0, "W"], false]);
+        expect(move([3, 3], [2, 3, "N"], [])).toEqual([[2, 3, "N"], false]);
+        expect(move([7, 3], [0, 3, "W"], [])).toEqual([[0, 3, "W"], false]);
+        expect(move([7, 3], [5, 0, "S"], [])).toEqual([[5, 0, "S"], false]);
+    });
+
+    test("returns new position and true if move leads to unoccupied position", () => {
+        expect(move([5, 5], [1, 4, "E"], [[3, 4, "E"]])).toEqual([[2, 4, "E"], true]);
+        expect(move([5, 5], [2, 4, "N"], [[2, 4, "S"], [1, 4, "E"]])).toEqual([[2, 5, "N"], true]);
+        expect(move([3, 3], [2, 3, "E"], [[1, 3, "E"]])).toEqual([[3, 3, "E"], true]);
+        expect(move([4, 5], [1, 3, "E"], [[4, 2, "E"]])).toEqual([[2, 3, "E"], true]);
+    });
+
+    test("returns old position and false if move leads to occupied postion", () => {
+        const occupied = [[2, 4, "W"], [2, 5, "W"], [0, 1, "S"]];
+        expect(move([5, 5], [1, 4, "E"], occupied)).toEqual([[1, 4, "E"], false]);
+        expect(move([5, 5], [2, 4, "N"], occupied)).toEqual([[2, 4, "N"], false]);
+        expect(move([0, 1], [0, 0, "N"], occupied)).toEqual([[0, 0, "N"], false]);
     });
 });

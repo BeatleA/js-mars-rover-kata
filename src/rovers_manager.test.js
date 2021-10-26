@@ -17,7 +17,7 @@ describe("manageRovers", () => {
 
     test("throws an error if arguments invalid", () => {
         expect(() => {
-            manageRovers([1, 5], [1, 5, "N"], "LMLMLMLMM");
+            manageRovers([1, 5], [1, 5, "N"], ["LMLMLMLMM"]);
         }).toThrow("invalid positions");
 
         expect(() => {
@@ -36,6 +36,14 @@ describe("manageRovers", () => {
         expect(manageRovers([15, 5], [[11, 3, "W"]], ["MLLMMRMM"])).toEqual([[12, 1, "S"]]);
         const result = manageRovers([10, 10], [[0, 0, "N"], [3, 3, "E"], [7, 5, "W"]], ["RMLM", "MMRM", "LLMMM"]);
         const expected = [[1, 1, "N"], [5, 2, "S"], [10, 5, "E"]];
+        expect(result).toEqual(expected);
+    });
+
+    test("returns an array of last possible positions when all arguments valid but rovers clashing", () => {
+        expect(manageRovers([7, 4], [[1, 2, "E"], [2, 2, "W"]], ["M", "RM"])).toEqual([[1, 2, "E"], [2, 3, "N"]]);
+        expect(manageRovers([5, 5], [[3, 2, "N"], [3, 3, "E"]], ["LMRMRMLMM", "MMRMMRMRRM"])).toEqual([[2, 3, "E"], [5, 1, "E"]]);
+        const result = manageRovers([10, 10], [[0, 0, "N"], [3, 3, "W"], [4, 5, "W"]], ["RMLM", "MMLMMR", "LMMMRMMM"]);
+        const expected = [[1, 1, "N"], [1, 2, "S"], [2, 2, "W"]];
         expect(result).toEqual(expected);
     });
 });

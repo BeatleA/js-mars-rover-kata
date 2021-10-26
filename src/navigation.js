@@ -33,12 +33,12 @@ const navigateRover = (grid, position, instructions) => {
     return [x, y, direction];
 };
 
-const move = (grid, position) => {
+const move = (grid, position, occupied) => {
     let [x, y, direction] = position;
     const moveXY = { N: [x, y + 1], S: [x, y - 1], W: [x - 1, y], E: [x + 1, y] };
 
     [x, y] = moveXY[direction];
-    const valid = isValidPosition(x, y, ...grid);
+    const valid = isValidPosition(x, y, ...grid) && occupied.every(element => element[0] !== x || element[1] !== y);
 
     return [valid ? [x, y, direction] : position, valid];
 };
