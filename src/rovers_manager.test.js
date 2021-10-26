@@ -21,6 +21,10 @@ describe("manageRovers", () => {
         }).toThrow("invalid positions");
 
         expect(() => {
+            manageRovers([1, 5], [[1, 5, "N"], [1, 5, "S"]], ["LMLMLMLMM", "LMLMM"]);
+        }).toThrow("invalid positions");
+
+        expect(() => {
             manageRovers([1, 5], [[1, 4, "E"]], "LMLMLSLMM");
         }).toThrow("invalid instructions");
 
@@ -45,5 +49,8 @@ describe("manageRovers", () => {
         const result = manageRovers([10, 10], [[0, 0, "N"], [3, 3, "W"], [4, 5, "W"]], ["RMLM", "MMLMMR", "LMMMRMMM"]);
         const expected = [[1, 1, "N"], [1, 2, "S"], [2, 2, "W"]];
         expect(result).toEqual(expected);
+        const result2 = manageRovers([10, 10], [[0, 0, "N"], [3, 3, "W"], [4, 3, "W"]], ["RMLM", "MRMRMRM", "M"]);
+        const expected2 = [[1, 1, "N"], [3, 3, "S"], [4, 3, "W"]];
+        expect(result2).toEqual(expected2);
     });
 });
