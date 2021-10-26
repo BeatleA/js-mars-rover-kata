@@ -77,7 +77,7 @@ describe("isValidPositionAndDirection", () => {
 describe("isValidOccupied", () => {
     test("returns true when occupied is valid", () => {
         const grid = [5, 5];
-        expect(isValidOccupied(grid, [[5, 5, "N"], [2, 3 , "S"], [4, 1, "W"]])).toBe(true);
+        expect(isValidOccupied(grid, [[5, 5, "N"], [2, 3, "S"], [4, 1, "W"]])).toBe(true);
         const occupied = [[0, 0, "E"], [1, 2, "E"], [1, 3, "E"]];
         expect(isValidOccupied(grid, occupied)).toBe(true);
     });
