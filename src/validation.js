@@ -11,8 +11,13 @@ const isValidPositionAndDirection = (grid, position) => {
         /^[NSWE]{1}$/g.test(position[2]) && isValidPosition(position[0], position[1], ...grid);
 };
 
+const isValidOccupied = (grid, occupied) => {
+    return (Array.isArray(occupied) && occupied.every(element => Array.isArray(element) && isValidPositionAndDirection(grid, element)));
+}
+
 module.exports = {
     isValidGrid,
     isValidPosition,
-    isValidPositionAndDirection
+    isValidPositionAndDirection,
+    isValidOccupied
 };

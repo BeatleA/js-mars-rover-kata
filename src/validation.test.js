@@ -1,7 +1,8 @@
 const {
     isValidGrid,
     isValidPosition,
-    isValidPositionAndDirection
+    isValidPositionAndDirection,
+    isValidOccupied
 } = require("./validation");
 
 describe("isValidGrid", () => {
@@ -70,5 +71,34 @@ describe("isValidPositionAndDirection", () => {
         expect(isValidPositionAndDirection([5, 5], [6, 3, 4])).toBe(false);
         expect(isValidPositionAndDirection([5, 5], ["N", 3, "E"])).toBe(false);
         expect(isValidPositionAndDirection([5, 5], [1, 3, ""])).toBe(false);
+    });
+});
+
+describe("isValidOccupied", () => {
+    test("returns true when occupied is valid", () => {
+        const grid = [5, 5];
+        expect(isValidOccupied(grid, [[5, 5, "N"], [2, 3 , "S"], [4, 1, "W"]])).toBe(true);
+        const occupied = [[0, 0, "E"], [1, 2, "E"], [1, 3, "E"]];
+        expect(isValidOccupied(grid, occupied)).toBe(true);
+    });
+
+    test("returns false when occupied is not valid", () => {
+        const grid = [5, 5];
+        expect(isValidOccupied()).toBe(false);
+        expect(isValidOccupied(grid, 3, 4, "N")).toBe(false);
+        const occupied = [["4", 2, "S"]];
+        expect(isValidOccupied(grid, occupied)).toBe(false);
+        const occupied2 = [[4, 2.4, "W"]];
+        expect(isValidOccupied(grid, occupied2)).toBe(false);
+        const occupied3 = [[1, -1, "E"]];
+        expect(isValidOccupied(grid, occupied3)).toBe(false);
+        const occupied4 = [[-1, 0, "E"]];
+        expect(isValidOccupied(grid, occupied4)).toBe(false);
+        const occupied5 = [[1, 0, "E"], [3, 2, "N"], [0, 4, "R"]];
+        expect(isValidOccupied(grid, occupied5)).toBe(false);
+        const occupied6 = [1, 0, "E"];
+        expect(isValidOccupied(grid, occupied6)).toBe(false);
+        const occupied7 = [[1, 0, "E"], [6, 0, "S"]];
+        expect(isValidOccupied(grid, occupied7)).toBe(false);
     });
 });
