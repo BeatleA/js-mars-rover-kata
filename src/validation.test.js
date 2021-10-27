@@ -2,7 +2,8 @@ const {
     isValidGrid,
     isValidPosition,
     isValidPositionAndDirection,
-    isValidOccupied
+    isValidOccupied,
+    validateNavigationArguments
 } = require("./validation");
 
 describe("isValidGrid", () => {
@@ -100,5 +101,47 @@ describe("isValidOccupied", () => {
         expect(isValidOccupied(grid, occupied6)).toBe(false);
         const occupied7 = [[1, 0, "E"], [6, 0, "S"]];
         expect(isValidOccupied(grid, occupied7)).toBe(false);
+    });
+});
+
+describe("validateNavigationArguments", () => {
+    test("throws an error if arguments missing", () => {
+        expect(() => {
+            validateNavigationArguments();
+        }).toThrow("grid is required");
+
+        expect(() => {
+            validateNavigationArguments([5, 5]);
+        }).toThrow("position is required");
+
+        expect(() => {
+            validateNavigationArguments([5, 5], [1, 2, "N"]);
+        }).toThrow("instructions is required");
+
+        expect(() => {
+            validateNavigationArguments([5, 5], [1, 2, "N"], "LMLMLMLMM");
+        }).toThrow("occupied is required");
+    });
+
+    test("throws an error if arguments invalid", () => {
+        expect(() => {
+            validateNavigationArguments([-1, 5], [1, 2, "N"], "LMLMLMLMM", []);
+        }).toThrow("invalid grid");
+
+        expect(() => {
+            validateNavigationArguments([1, 5], [1, 6, "N"], "LMLMLMLMM", []);
+        }).toThrow("invalid position");
+
+        expect(() => {
+            validateNavigationArguments([1, 5], [1, 2, "K"], "LMLMLMLMM", []);
+        }).toThrow("invalid position");
+
+        expect(() => {
+            validateNavigationArguments([1, 5], [1, 4, "E"], "LMLMLSLMM", []);
+        }).toThrow("invalid instructions");
+
+        expect(() => {
+            validateNavigationArguments([1, 5], [1, 4, "E"], "LMLMLLMM", [1, 2, "S"]);
+        }).toThrow("invalid occupied");
     });
 });

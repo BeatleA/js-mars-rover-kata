@@ -1,19 +1,10 @@
 const {
-    isValidGrid,
-    isValidPosition,
-    isValidPositionAndDirection,
-    isValidOccupied
+    validateNavigationArguments,
+    isValidPosition
 } = require("./validation");
 
 const navigateRover = (grid, position, instructions, occupied) => {
-    if (!grid) throw new Error("grid is required");
-    if (!position) throw new Error("position is required");
-    if (!instructions) throw new Error("instructions is required");
-    if (!occupied) throw new Error("occupied is required");
-    if (!isValidGrid(grid)) throw new Error("invalid grid");
-    if (!isValidPositionAndDirection(grid, position)) throw new Error("invalid position");
-    if (!(/^[LRM]+$/g.test(instructions))) throw new Error("invalid instructions");
-    if (!isValidOccupied(grid, occupied)) throw new Error("invalid occupied");
+    validateNavigationArguments(grid, position, instructions, occupied);
 
     let [x, y, direction] = position;
     const left = { N: "W", S: "E", W: "S", E: "N" };

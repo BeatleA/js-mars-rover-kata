@@ -10,9 +10,21 @@ const isValidPositionAndDirection = (grid, position) =>
 const isValidOccupied = (grid, occupied) =>
     Array.isArray(occupied) && occupied.every(element => Array.isArray(element) && isValidPositionAndDirection(grid, element));
 
+const validateNavigationArguments = (grid, position, instructions, occupied) => {
+    if (!grid) throw new Error("grid is required");
+    if (!position) throw new Error("position is required");
+    if (!instructions) throw new Error("instructions is required");
+    if (!occupied) throw new Error("occupied is required");
+    if (!isValidGrid(grid)) throw new Error("invalid grid");
+    if (!isValidPositionAndDirection(grid, position)) throw new Error("invalid position");
+    if (!(/^[LRM]+$/g.test(instructions))) throw new Error("invalid instructions");
+    if (!isValidOccupied(grid, occupied)) throw new Error("invalid occupied");
+}
+
 module.exports = {
-    isValidGrid,
+    validateNavigationArguments,
     isValidPosition,
+    isValidGrid,
     isValidPositionAndDirection,
     isValidOccupied
 };

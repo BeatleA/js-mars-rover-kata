@@ -4,46 +4,6 @@ const {
 } = require("./navigation");
 
 describe("navigateRover", () => {
-    test("throws an error if arguments missing", () => {
-        expect(() => {
-            navigateRover();
-        }).toThrow("grid is required");
-
-        expect(() => {
-            navigateRover([5, 5]);
-        }).toThrow("position is required");
-
-        expect(() => {
-            navigateRover([5, 5], [1, 2, "N"]);
-        }).toThrow("instructions is required");
-
-        expect(() => {
-            navigateRover([5, 5], [1, 2, "N"], "LMLMLMLMM");
-        }).toThrow("occupied is required");
-    });
-
-    test("throws an error if arguments invalid", () => {
-        expect(() => {
-            navigateRover([-1, 5], [1, 2, "N"], "LMLMLMLMM", []);
-        }).toThrow("invalid grid");
-
-        expect(() => {
-            navigateRover([1, 5], [1, 6, "N"], "LMLMLMLMM", []);
-        }).toThrow("invalid position");
-
-        expect(() => {
-            navigateRover([1, 5], [1, 2, "K"], "LMLMLMLMM", []);
-        }).toThrow("invalid position");
-
-        expect(() => {
-            navigateRover([1, 5], [1, 4, "E"], "LMLMLSLMM", []);
-        }).toThrow("invalid instructions");
-
-        expect(() => {
-            navigateRover([1, 5], [1, 4, "E"], "LMLMLLMM", [1, 2, "S"]);
-        }).toThrow("invalid occupied");
-    });
-
     test("returns new position when instructions correct and no clashes", () => {
         expect(navigateRover([3, 3], [1, 2, "N"], "M", [])).toEqual([1, 3, "N"]);
         expect(navigateRover([7, 4], [1, 2, "N"], "LM", [[0, 0, "W"]])).toEqual([0, 2, "W"]);

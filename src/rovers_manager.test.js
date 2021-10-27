@@ -22,7 +22,7 @@ describe("manageRovers", () => {
 
         expect(() => {
             manageRovers([1, 5], [[1, 5, "N"], [1, 5, "S"]], ["LMLMLMLMM", "LMLMM"]);
-        }).toThrow("invalid positions");
+        }).toThrow("duplicate coordinates");
 
         expect(() => {
             manageRovers([1, 5], [[1, 4, "E"]], "LMLMLSLMM");
