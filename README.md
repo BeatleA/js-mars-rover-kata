@@ -17,4 +17,4 @@ The program has been divided into four modules addressing separate concerns:
 
 ## Approaches
 * Input positions are checked for duplicates. If there are more than one rover on any position the program will throw an error.
-* In case of rover instructions leading off the surface of the plateau or onto a position already occupied by a different rover the program will stop moving the rover, print out a warning and return the last possible position.
+* In case of rover instructions leading off the surface of the plateau or into a position already occupied by a different rover the program will stop moving the rover, print out a warning and return the last possible position.
