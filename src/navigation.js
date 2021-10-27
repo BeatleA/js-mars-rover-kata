@@ -1,7 +1,7 @@
 const {
     validateNavigationArguments,
     isValidPosition
-} = require("./validation");
+} = require("./navigation_validation");
 
 const navigateRover = (grid, position, instructions, occupied) => {
     validateNavigationArguments(grid, position, instructions, occupied);

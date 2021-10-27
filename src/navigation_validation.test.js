@@ -4,7 +4,7 @@ const {
     isValidPositionAndDirection,
     isValidOccupied,
     validateNavigationArguments
-} = require("./validation");
+} = require("./navigation_validation");
 
 describe("isValidGrid", () => {
     test("returns true when grid is valid", () => {
