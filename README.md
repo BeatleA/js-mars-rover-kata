@@ -4,18 +4,6 @@ This is my solution to Mars Rover Kata.
 
 ## Instructions
 Fork this repository and clone it into a local directory.
-In that directory generate package.json with the following command:
-```javascript
-npm init -f
-```
-In the package.json change line:
-```javascript
-"test": "echo \"Error: no test specified\" && exit 1"
-```
-to:
-```javascript
-"test": "jest"
-```
 Install jest package:
 ```javascript
 npm install --save-dev jest
